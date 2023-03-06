@@ -6,5 +6,5 @@ app.get('app/v1/hello', (req,res) => {
 })
 
 const port = process.env.PORT || 3000;
-listen(port);
+app.listen(port);
 console.log("Listen on port:"+port)
