@@ -7,9 +7,11 @@
   "name": "webapibasic",
   "version": "1.0.0",
   "main": "index.js",
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node-dev app/app.js"
+    "start": "node-dev app/app.js",
+    "connect": "sqlite3 app/db/database.sqlite3"
   },
   "repository": {
     "type": "git",
