@@ -1,0 +1,26 @@
+{
+  "name": "webapibasic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node-dev app/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HA-mi-lton/WebApiBasic.git"
+  },
+  "author": "Shiro",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HA-mi-lton/WebApiBasic/issues"
+  },
+  "homepage": "https://github.com/HA-mi-lton/WebApiBasic#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "mysql": "^2.18.1",
+    "sqlite3": "^5.1.6"
+  }
+}
