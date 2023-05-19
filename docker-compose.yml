@@ -1,12 +1,11 @@
 version: "3"
 
 services:
-  build:
-    dockerfile: Dockerfile
   db:
     platform: linux/x86_64
     image: mysql:5.7
     container_name: mysql_host
+    tty: true
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: api_basic
@@ -16,8 +15,12 @@ services:
     ports:
       - 3306:3306
   app:
-    image: node:16.13.0
+    build:
+      dockerfile: Dockerfile
+    # image: node:16.13.0
     working_dir: /app
     tty: true
     volumes:
       - ./:/app
+    ports:
+      - 3000:3000
