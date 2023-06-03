@@ -19,7 +19,7 @@ services:
       dockerfile: Dockerfile
     # image: node:16.13.0
     working_dir: /app
-    tty: true
+    tty: true #docker再起動時にtableがリセットされなくなる
     volumes:
       - ./:/app
     ports:
