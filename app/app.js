@@ -27,13 +27,16 @@ app.get("/api/users", (req, res) => {
     console.log(result);
     res.send(result);
   });
-  // res.json({ id: 1, name: "Yui" });
-
-  // const db = new sqlite3.Database(dbPath);
-  // db.all("select * from users", (err, rows) => {
 });
-// db.close();
-// });
+
+//Get a user
+app.get("/api/:id", (req, res) => {
+  connection.query(`select * from users where id=${1}`, (err, result) => {
+    if (err) throw err;
+    console.log(result);
+    res.send(result);
+  });
+});
 
 const port = 3000;
 app.listen(port);
