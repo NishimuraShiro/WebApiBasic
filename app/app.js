@@ -1,10 +1,6 @@
 const express = require("express");
 const app = express();
 const mysql = require("mysql2");
-// const sqlite3 = require("sqlite3");
-// const dbPath = "users.db";
-
-//app.use(express.static("public"));
 
 //mysqlの接続に必要な情報
 const connection = mysql.createConnection({
@@ -13,12 +9,6 @@ const connection = mysql.createConnection({
   password: "shiro",
   database: "api_basic"
 });
-
-//mysql接続
-// con.connect((err) => {
-//   if (err) throw err;
-//   console.log("Connected");
-// });
 
 //Get all users
 app.get("/api/users", (req, res) => {
