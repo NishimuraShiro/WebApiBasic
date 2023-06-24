@@ -28,6 +28,16 @@ app.get("/api/:id", (req, res) => {
   });
 });
 
+//Search users matching keyword
+app.get("/api/search", (req, res) => {
+  connection.query(
+    `select * from users where name like ${req.query.q}`,
+    (err, rows) => {
+      res.json(rows);
+    }
+  );
+});
+
 const port = 3000;
 app.listen(port);
 console.log(port + "server opened!");
