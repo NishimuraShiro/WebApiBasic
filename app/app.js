@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
-const mysql = require("mysql2");
 const path = require("path");
+const connection = require("./db");
 // const router = express.Router();
 
 // URL/user/...
@@ -12,27 +12,25 @@ const apiRouter = require("./router/api");
 
 //静的ファイルのルートディレクトリを設定
 //app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "views")));
 
 //テンプレートエンジン(動的ファイル)
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-
-//mysqlの接続に必要な情報
-const connection = mysql.createConnection({
-  host: "db",
-  user: "shiro",
-  password: "shiro",
-  database: "api_basic"
-});
 
 //ルーティング
 app.use("/user", userRouter);
 app.use("/api", apiRouter);
 
 app.get("/", (req, res) => {
-  //res.status(500).json({ msg: "エラーです！" });
-  //res.send("あいうえお");
-  res.render("index", { text: "Node jsとexpress" });
+  connection.query("select * from users", (err, results) => {
+    if (err) {
+      return "エラーです。";
+    } else {
+      //取得したデータをejsテンプレートに渡してhtmlを生成
+      res.render("index", { data: results });
+    }
+  });
 });
 
 app.listen(3000);
