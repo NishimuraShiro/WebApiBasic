@@ -33,4 +33,21 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/search", (req, res) => {
+  const query = req.query.name;
+  console.log(query);
+  if (query) {
+    connection.query(
+      `select * from users where name like '%${query}%'`,
+      (err, results) => {
+        if (err) throw err;
+        console.debug(results);
+        res.render("search", { results, query });
+      }
+    );
+  } else {
+    res.render("search", { results: [], query: "" });
+  }
+});
+
 app.listen(3000);

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search</title>
+  </head>
+  <body>
+    <h1>Search data</h1>
+    <form action="/search" method="get">
+      <!-- name属性：パラメータの変数が入る -->
+      <input type="text" name="name" value="<%= query %>" />
+      <button type="submit">検索</button>
+    </form>
+    <% if (results.length > 0) { %>
+    <ul>
+      <% results.forEach(item => { %>
+      <li><%= item.name %></li>
+      <% }); %>
+    </ul>
+    <% } else { %>
+    <p>該当するものはありません。</p>
+    <% } %>
+  </body>
+</html>
