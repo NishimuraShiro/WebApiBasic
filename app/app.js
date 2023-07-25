@@ -1,43 +1,53 @@
 const express = require("express");
 const app = express();
-const mysql = require("mysql2");
+const path = require("path");
+const connection = require("./db");
+// const router = express.Router();
 
-//mysqlの接続に必要な情報
-const connection = mysql.createConnection({
-  host: "db",
-  user: "shiro",
-  password: "shiro",
-  database: "api_basic"
-});
+// URL/user/...
+const userRouter = require("./router/user");
 
-//Get all users
-app.get("/api/users", (req, res) => {
-  connection.query("select * from users", (err, result) => {
-    if (err) throw err;
-    console.log(result);
-    res.send(result);
-  });
-});
+// URL/api/....
+const apiRouter = require("./router/api");
 
-//Get a user
-app.get("/api/:id", (req, res) => {
-  connection.query(`select * from users where id=${1}`, (err, result) => {
-    if (err) throw err;
-    console.log(result);
-    res.send(result);
-  });
-});
+//静的ファイルのルートディレクトリを設定
+//app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "views")));
 
-//Search users matching keyword
-app.get("/api/search", (req, res) => {
-  connection.query(
-    `select * from users where name like ${req.query.q}`,
-    (err, rows) => {
-      res.json(rows);
+//テンプレートエンジン(動的ファイル)
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
+//ルーティング
+app.use("/user", userRouter);
+app.use("/api", apiRouter);
+
+app.get("/", (req, res) => {
+  connection.query("select * from users", (err, results) => {
+    if (err) {
+      return "エラーです。";
+    } else {
+      //取得したデータをejsテンプレートに渡してhtmlを生成
+      res.render("index", { data: results });
     }
-  );
+  });
 });
 
-const port = 3000;
-app.listen(port);
-console.log(port + "server opened!");
+app.get("/search", (req, res) => {
+  const query = req.query.name;
+  console.log(query);
+  if (query) {
+    connection.query(
+      `select * from users where name like '%${query}%'`,
+      (err, results) => {
+        if (err) throw err;
+        console.debug(results);
+        res.render("search", { results, query });
+      }
+    );
+  } else {
+    res.render("search", { results: [], query: "" });
+  }
+});
+
+app.listen(3000);
