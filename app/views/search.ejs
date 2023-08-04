@@ -5,20 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Search</title>
   </head>
-  <body>
+  <body style="width: 600px; height: 200px; margin: 5cm auto; font-size: 30px">
     <h1>Search data</h1>
-    <form action="/search" method="get">
+    <form action="/api/search" method="get">
       <!-- name属性：パラメータの変数が入る -->
-      <input type="text" name="name" value="<%= query %>" />
-      <button type="submit">検索</button>
+      <input
+        type="text"
+        name="q"
+        value="<%= keyword %>"
+        style="width: 5cm; height: 1cm"
+      />
+      <button type="submit" style="margin-left: 1cm; width: 3cm; height: 1cm">
+        検索
+      </button>
     </form>
-    <% if (results.length > 0) { %>
+    <% if (results && results.length > 0) { %>
     <ul>
-      <% results.forEach(item => { %>
-      <li><%= item.name %></li>
+      <% results.forEach(user => { %>
+      <li style="margin-top: 0.5cm"><%= user.name %></li>
       <% }); %>
     </ul>
-    <% } else { %>
+    <% } else if (results && results.length === 0) { %>
     <p>該当するものはありません。</p>
     <% } %>
   </body>
