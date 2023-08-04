@@ -3,58 +3,6 @@ const path = require("path");
 const router = express.Router();
 const connection = require("../db");
 
-//静的ファイルのルートディレクトリを設定
-//app.use(express.static(path.join(__dirname, "public")));
-// app.use(express.static(path.join(__dirname, "views")));
-//app.use(express.static("views"));
-
-//テンプレートエンジン(動的ファイル)
-// router.set("view engine", "ejs");
-// router.set("views", path.join(__dirname, "../views"));
-
-//middleware
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-
-// app.get("/api/users", (req, res) => {
-//   connection.query("select * from users", (err, result) => {
-//     if (err) throw err;
-//     console.log(result);
-//     res.json(result);
-//   });
-// });
-
-// router.get("/ejs_users", (req, res) => {
-//   connection.query("select * from users", (err, result) => {
-//     if (err) throw err;
-//     console.log(result);
-//     res.render("index", { text: "Node jsとexpress", web: result });
-//   });
-// });
-
-//ユーザーの部分一致
-// router.get("/search", (req, res) => {
-//   const keyword = req.query.q;
-//   connection.query(
-//     `select * from users where name like '%${keyword}%'`,
-//     (err, result) => {
-//       if (err) throw err;
-//       console.log(result);
-//       res.json(result);
-//     }
-//   );
-// });
-
-//idによるユーザー取得
-// router.get("/:id", (req, res) => {
-//   const id = req.params.id;
-//   connection.query(`select * from users where id=${id}`, (err, result) => {
-//     if (err) throw err;
-//     console.log(result);
-//     res.send(result);
-//   });
-// });
-
 router.use(express.static(path.join(__dirname, "../views")));
 
 router.get("/", (req, res) => {
@@ -73,6 +21,25 @@ router.get("/users", (req, res) => {
     console.log(result);
     res.render("index", { data: result }); //"index"はejsのファイル名
   });
+});
+
+//ユーザーの部分一致
+router.get("/search", (req, res) => {
+  const keyword = req.query.q;
+  if (keyword) {
+    connection.query(
+      `select * from users where name like '%${keyword}%'`,
+      (err, results) => {
+        if (err) {
+          res.status(500).json({ error: "データベースエラーが発生しました。" });
+        } else {
+          res.render("search", { results, keyword }); //検索結果をテンプレートに渡す
+        }
+      }
+    );
+  } else {
+    res.render("search", { results: [], keyword }); //空の結果をテンプレートに渡す
+  }
 });
 
 router.post("/create", (req, res) => {

@@ -26,6 +26,8 @@ app.use(express.json());
 
 app.use("/api", apiRouter);
 
+app.listen(3003);
+
 // app.get("/", (req, res) => {
 //   connection.query("select * from users", (err, results) => {
 //     if (err) {
@@ -53,8 +55,6 @@ app.use("/api", apiRouter);
 //     res.render("search", { results: [], query: "" });
 //   }
 // });
-
-app.listen(3003);
 
 // const express = require("express");
 // const app = express();
