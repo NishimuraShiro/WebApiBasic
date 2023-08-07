@@ -53,4 +53,24 @@ router.post("/create", (req, res) => {
   });
 });
 
+router.get("/edit/:id", (req, res) => {
+  const userId = req.params.id;
+  const query = "SELECT * FROM users WHERE id = ?";
+  connection.query(query, [userId], (err, result) => {
+    if (err) throw err;
+    res.render("edit", { user: result });
+  });
+});
+
+router.post("/update/:id", (req, res) => {
+  const userId = req.params.id;
+  const { name, profile } = req.body;
+  const query = "UPDATE users SET name = ?, profile = ? WHERE id = ?";
+  connection.query(query, [name, profile, userId], (err, result) => {
+    if (err) throw err;
+    console.log("Data updated successfully!");
+    res.redirect("/api/users");
+  });
+});
+
 module.exports = router;
