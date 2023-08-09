@@ -73,4 +73,14 @@ router.post("/update/:id", (req, res) => {
   });
 });
 
+router.get("/delete/:id", (req, res) => {
+  const userId = req.params.id;
+  const query = "DELETE FROM users WHERE id = ?";
+  connection.query(query, [userId], (err, result) => {
+    if (err) throw err;
+    console.log("Data deleted successfully!");
+    res.redirect("/api/users");
+  });
+});
+
 module.exports = router;
