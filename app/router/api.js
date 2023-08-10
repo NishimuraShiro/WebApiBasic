@@ -3,6 +3,7 @@ const path = require("path");
 const router = express.Router();
 const connection = require("../db");
 
+// ルーターを利用した静的ファイル・フォルダを提供するミドルウェアの設定
 router.use(express.static(path.join(__dirname, "../views")));
 
 router.get("/", (req, res) => {
@@ -13,7 +14,7 @@ router.get("/new", (req, res) => {
   res.sendFile(path.join(__dirname, "../views/new.html"));
 });
 
-//全ユーザー取得
+//全ユーザー取得機能の実装
 //@path api/users[GET]
 router.get("/users", (req, res) => {
   connection.query("select * from users", (err, result) => {
@@ -23,7 +24,7 @@ router.get("/users", (req, res) => {
   });
 });
 
-//ユーザーの部分一致
+//ユーザーの部分一致、検索機能の実装
 router.get("/search", (req, res) => {
   const keyword = req.query.q;
   if (keyword) {
@@ -42,6 +43,7 @@ router.get("/search", (req, res) => {
   }
 });
 
+// 新規投稿機能の実装
 router.post("/create", (req, res) => {
   const { name, profile } = req.body;
   const post = { name, profile };
@@ -53,6 +55,7 @@ router.post("/create", (req, res) => {
   });
 });
 
+// 編集フォームを表示するためのエンドポイント処理の実装
 router.get("/edit/:id", (req, res) => {
   const userId = req.params.id;
   const query = "SELECT * FROM users WHERE id = ?";
@@ -62,6 +65,7 @@ router.get("/edit/:id", (req, res) => {
   });
 });
 
+// 編集機能の実装
 router.post("/update/:id", (req, res) => {
   const userId = req.params.id;
   const { name, profile } = req.body;
@@ -73,6 +77,7 @@ router.post("/update/:id", (req, res) => {
   });
 });
 
+// 削除機能の実装
 router.get("/delete/:id", (req, res) => {
   const userId = req.params.id;
   const query = "DELETE FROM users WHERE id = ?";
