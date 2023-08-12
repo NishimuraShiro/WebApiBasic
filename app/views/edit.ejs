@@ -5,7 +5,9 @@
   </head>
   <body>
     <h2>編集フォーム</h2>
-    <form action="/api/update/<%= user[0].id %>" method="post">
+    <form action="/api/update/<%= user[0].id %>?_method=PUT" method="post">
+      <!-- 10行目を追加、8行目を多少修正 -->
+      <input type="hidden" name="_method" value="put" />
       <label for="name">名前:</label>
       <input type="text" id="name" name="name" /><br /><br />
       <label for="profile">プロフィール:</label><br />
