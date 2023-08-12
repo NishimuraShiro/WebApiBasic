@@ -2,6 +2,8 @@ const express = require("express");
 const path = require("path");
 const router = express.Router();
 const connection = require("../db");
+const methodOverride = require("method-override");
+router.use(methodOverride("_method"));
 
 // ルーターを利用した静的ファイル・フォルダを提供するミドルウェアの設定
 router.use(express.static(path.join(__dirname, "../views")));
@@ -66,7 +68,7 @@ router.get("/edit/:id", (req, res) => {
 });
 
 // 編集機能の実装
-router.post("/update/:id", (req, res) => {
+router.put("/update/:id", (req, res) => {
   const userId = req.params.id;
   const { name, profile } = req.body;
   const query = "UPDATE users SET name = ?, profile = ? WHERE id = ?";
