@@ -2,6 +2,8 @@ const express = require("express");
 const path = require("path");
 const router = express.Router();
 const connection = require("../db");
+
+// 以下の2行はputメソッドを使うために必要なパッケージ
 const methodOverride = require("method-override");
 router.use(methodOverride("_method"));
 
@@ -79,14 +81,19 @@ router.put("/update/:id", (req, res) => {
   });
 });
 
-// 削除機能の実装
+// 削除機能の実装（DELETEメソッド）
 router.get("/delete/:id", (req, res) => {
   const userId = req.params.id;
   const query = "DELETE FROM users WHERE id = ?";
+
   connection.query(query, [userId], (err, result) => {
-    if (err) throw err;
+    if (err) {
+      console.error("Error deleting data:", err);
+      return res.status(500).json({ error: "Error deleting data" });
+    }
+
     console.log("Data deleted successfully!");
-    res.redirect("/api/users");
+    return res.redirect("/api/users");
   });
 });
 
