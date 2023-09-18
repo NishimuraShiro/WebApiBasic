@@ -9,11 +9,23 @@
       <!-- 10行目を追加、8行目を多少修正 -->
       <input type="hidden" name="_method" value="put" />
       <label for="name">名前:</label>
-      <input type="text" id="name" name="name" /><br /><br />
+      <!-- valueデータ残す -->
+      <input
+        type="text"
+        id="name"
+        name="name"
+        value="<%= user[0].name %>"
+      /><br /><br />
       <label for="profile">プロフィール:</label><br />
-      <textarea id="profile" name="profile" rows="4" cols="50"></textarea
+      <textarea id="profile" name="profile" rows="4" cols="50">
+        <%= user[0].profile %><!-- valueデータ残す -->
+      </textarea
       ><br /><br />
       <input type="submit" value="編集する" />
     </form>
+    <script>
+      // "name"IDにフォーカスを当てる
+      document.getElementById("name").focus();
+    </script>
   </body>
 </html>
