@@ -11,7 +11,8 @@ router.use(methodOverride("_method"));
 router.use(express.static(path.join(__dirname, "../views")));
 
 router.get("/", (req, res) => {
-  res.send("Hello, this is the home page!");
+  // res.send("Hello, this is the home page!");
+  res.sendFile(path.join(__dirname, "../views/home.html"));
 });
 
 router.get("/new", (req, res) => {
