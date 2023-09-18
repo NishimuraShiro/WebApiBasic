@@ -1,3 +1,7 @@
+* {
+  padding: 0;
+  margin: 0;
+}
 table {
   border: 1px solid black;
   width: 500px;
@@ -12,4 +16,17 @@ th {
 td {
   text-align: center;
   border: 1px solid black;
+}
+.BlockPlace {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: space-between; */
+  min-height: 100vh;
+  margin-top: 5cm;
+}
+a {
+  font-size: large;
+  font-weight: bolder;
+  padding-top: 1cm;
 }
